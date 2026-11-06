@@ -1,4 +1,8 @@
-const rawBaseUrl = import.meta.env.VITE_API_BASE_URL || '';
+const defaultProdApiUrl = 'https://be-rbb-demo.rising-beyond-border.workers.dev';
+const rawBaseUrl =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.PROD ? defaultProdApiUrl : '');
+
 // Clean up trailing slashes and any accidental '/api' suffix
 const cleanBaseUrl = rawBaseUrl.trim().replace(/\/+$/, '').replace(/\/api$/, '');
 
