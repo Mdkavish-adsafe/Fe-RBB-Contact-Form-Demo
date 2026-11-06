@@ -40,6 +40,15 @@ export default function ContactForm() {
 
   const handleTurnstileError = (errorCode) => {
     setTurnstileToken('');
+    const errStr = String(errorCode || '');
+    if (errStr.includes('110200')) {
+      const currentHost = typeof window !== 'undefined' ? window.location.hostname : 'your domain';
+      setErrors((prev) => ({
+        ...prev,
+        turnstile: `Domain not authorized (Error 110200): Please add "${currentHost}" to the allowed domains list in Cloudflare Turnstile dashboard.`,
+      }));
+      return;
+    }
     setErrors((prev) => ({
       ...prev,
       turnstile: `Security verification challenge failed (${errorCode || 'Error'}). Please try reloading.`,
