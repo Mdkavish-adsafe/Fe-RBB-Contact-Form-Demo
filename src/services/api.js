@@ -5,6 +5,7 @@ export async function submitContactForm(data) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
+    signal: AbortSignal.timeout(15000),
   });
 
   const result = await response.json();
@@ -17,7 +18,9 @@ export async function submitContactForm(data) {
 }
 
 export async function checkHealth() {
-  const response = await fetch(`${API_BASE_URL}/api/health`);
+  const response = await fetch(`${API_BASE_URL}/api/health`, {
+    signal: AbortSignal.timeout(5000),
+  });
   return response.json();
 }
 
